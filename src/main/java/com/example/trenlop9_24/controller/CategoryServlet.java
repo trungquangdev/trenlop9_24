@@ -24,27 +24,61 @@ public class CategoryServlet extends HttpServlet {
 
         if(uri.contains("/category/hien-thi")){
             //chuc nang hien thi
+            this.hienThiCategory(request,response);
 
         }else if(uri.contains("/category/detail")){
+            this.detailCategory(request,response);
 
         }else if(uri.contains("/category/delete")){
+            this.deleteCategory(request,response);
 
         }else if(uri.contains("/category/view-update")){
+            this.viewUpdateCategory(request,response);
 
         }else if (uri.contains("/category/search")){
+            this.searchCategory(request,response);
 
         }else if (uri.contains("/category/view-add")) {
+            this.viewAddCategory(request,response);
 
-        }else {}
+        }else {
+            this.hienThiCategory(request,response);
+        }
     }
+
+    private void viewAddCategory(HttpServletRequest request, HttpServletResponse response) {
+    }
+
+    private void searchCategory(HttpServletRequest request, HttpServletResponse response) {
+    }
+
+    private void viewUpdateCategory(HttpServletRequest request, HttpServletResponse response) {
+    }
+
+    private void deleteCategory(HttpServletRequest request, HttpServletResponse response) {
+    }
+
+    private void detailCategory(HttpServletRequest request, HttpServletResponse response) {
+    }
+
+    private void hienThiCategory(HttpServletRequest request, HttpServletResponse response) {
+    }
+
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String uri = request.getRequestURI();
         System.out.println("URI la: " + uri);
 
         if (uri.contains("/category/add")) {
-
+            this.addCategory(request,response);
         } else if (uri.contains("/category/update")) {
+            this.updateCategory(request,response);
 
         }else {}
+    }
+
+    private void updateCategory(HttpServletRequest request, HttpServletResponse response) {
+    }
+
+    private void addCategory(HttpServletRequest request, HttpServletResponse response) {
     }
 }
