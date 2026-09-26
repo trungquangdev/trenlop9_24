@@ -29,7 +29,6 @@ public class CategoryServlet extends HttpServlet {
         System.out.println("URI laf: "+uri);
 
         if(uri.contains("/category/hien-thi")){
-            //chuc nang hien thi
             this.hienThiCategory(request,response);
 
         }else if(uri.contains("/category/detail")){
@@ -74,7 +73,7 @@ public class CategoryServlet extends HttpServlet {
         // request.setAttribute("lists1,lists);
         request.setAttribute("listsCate", cateRepo.getAll());
         //chuyen trang
-        request.getRequestDispatcher("/category.jsp").forward(request,response);
+        request.getRequestDispatcher("/categorys.jsp").forward(request,response);
     }
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
