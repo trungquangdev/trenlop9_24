@@ -25,13 +25,14 @@
 <%--        for each: c:
     ${} dùng cho biến gọi từ servlet sang
 --%>
-    <c:forEach items="${listsCate}" var="cate"></c:forEach>
+    <c:forEach items="${listsCate}" var="cate">
     <tr>
         <td></td>
         <td>${cate.categoryCode}</td>
         <td>${cate.categoryName}</td>
         <td></td>
     </tr>
+    </c:forEach>
     </tbody>
 </table>
 </body>
