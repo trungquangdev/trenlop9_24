@@ -29,7 +29,7 @@ public class CategoryRepository {
     // 2 do chua register trong HibernateUtil
 
     public void add(Category cate){
-        // transation -> tinh toan ve,
+        // transation -> tinh toan ven
         try{
             //b1: bat dau 1 transiton
             s.getTransaction().begin();
@@ -58,7 +58,7 @@ public class CategoryRepository {
         }
     }
 
-    public void add(Category cate){
+    public void delete(Category cate){
         // transation -> tinh toan ve,
         try{
             //b1: bat dau 1 transiton
