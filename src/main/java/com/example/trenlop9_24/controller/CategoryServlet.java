@@ -1,7 +1,11 @@
 package com.example.trenlop9_24.controller;
 
 import java.io.*;
+import java.util.List;
 
+import com.example.trenlop9_24.entity.Category;
+import com.example.trenlop9_24.repository.CategoryRepository;
+import jakarta.servlet.ServletException;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
 
@@ -16,7 +20,9 @@ import jakarta.servlet.annotation.*;
         "/category/add"
 })
 public class CategoryServlet extends HttpServlet {
-    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    private CategoryRepository cateRepo = new CategoryRepository();
+
+    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         //kiểm tra chứa trong chuỗi: contains
         //B1: lấy uri trên đường dẫn
         String uri = request.getRequestURI();
@@ -42,7 +48,7 @@ public class CategoryServlet extends HttpServlet {
             this.viewAddCategory(request,response);
 
         }else {
-            this.hienThiCategory(request,response);
+
         }
     }
 
@@ -61,7 +67,14 @@ public class CategoryServlet extends HttpServlet {
     private void detailCategory(HttpServletRequest request, HttpServletResponse response) {
     }
 
-    private void hienThiCategory(HttpServletRequest request, HttpServletResponse response) {
+    private void hienThiCategory(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        //b1: lay ra list ->getAll
+//        List<Category>lists = cateRepo.getAll();
+        //b2: truyen bien servlet -> jsp
+        // request.setAttribute("lists1,lists);
+        request.setAttribute("listsCate", cateRepo.getAll());
+        //chuyen trang
+        request.getRequestDispatcher("/category.jsp").forward(request,response);
     }
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
