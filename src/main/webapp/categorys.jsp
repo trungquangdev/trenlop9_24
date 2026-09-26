@@ -25,7 +25,7 @@
 <%--        for each: c:
     ${} dùng cho biến gọi từ servlet sang
 --%>
-    <c:forEach items="${listsCate}" var="cate">
+    <c:forEach items="${listsCate}" var="cate"> // lưu ý
     <tr>
         <td></td>
         <td>${cate.categoryCode}</td>

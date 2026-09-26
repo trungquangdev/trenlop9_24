@@ -71,7 +71,7 @@ public class CategoryServlet extends HttpServlet {
 //        List<Category>lists = cateRepo.getAll();
         //b2: truyen bien servlet -> jsp
         // request.setAttribute("lists1,lists);
-        request.setAttribute("listsCate", cateRepo.getAll());
+        request.setAttribute("listsCate", cateRepo.getAll()); // luu ý
         //chuyen trang
         request.getRequestDispatcher("/categorys.jsp").forward(request,response);
     }
