@@ -1,6 +1,7 @@
 package com.example.trenlop9_24.controller;
 
 import java.io.*;
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 import com.example.trenlop9_24.entity.Category;
@@ -116,13 +117,26 @@ public class CategoryServlet extends HttpServlet {
     private void updateCategory(HttpServletRequest request, HttpServletResponse response) {
     }
 
-    private void addCategory(HttpServletRequest request, HttpServletResponse response) {
+    private void addCategory(HttpServletRequest request, HttpServletResponse response) throws IOException, InvocationTargetException, IllegalAccessException {
         Category cate = new Category();
+
+        try {
+            BeanUtils.populate(cate, request.getParameterMap());
+            cateRepo.add(cate);
+            response.sendRedirect("/category/hien-thi");
+        } catch (IllegalAccessException | InvocationTargetException e) {
+            e.printStackTrace();
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+        }
         //b1: lay toan bo gia tri cua cac o input jsp
         // BeanUtil -> mapping toan bo gia tri input - tu dong mapping
         // mapping name input trung` name entity
         BeanUtils.populate(cate,request.getParameterMap());
         //b2:
-        cateRepo.
+        // Lưu Category xuống database
+        cateRepo.add(cate);
+
+        // Sau khi thêm xong, quay về trang hiển thị
+        response.sendRedirect("/category/hien-thi");
     }
 }

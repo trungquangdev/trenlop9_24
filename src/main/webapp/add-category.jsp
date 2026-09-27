@@ -5,7 +5,7 @@
   </head>
   <body>
     <form action="/category/add" method="post">
-      // name trong input phai trung voi entity ben category
+<%--      name trong input phai trung voi entity ben category--%>
       Cate code: <input type="text" name="categoryCode" />
       <br />
       Cate name: <input type="text" name="categoryName" />

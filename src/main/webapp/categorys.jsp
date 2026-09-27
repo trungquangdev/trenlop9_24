@@ -10,7 +10,7 @@
     <button type="submit">Search</button>
 </form>
 <br/>
-<button><a href="">Add Cate</a></button>
+<button><a href="/category/view-add">Add Cate</a></button>
 <%--   hiện thị dữ liệu jsp: table/ì..else/switch...case -> jstl <c:ten ham>--%>
 <table border="1" cellspacing="1" cellpadding="10">
     <thead>
@@ -25,7 +25,8 @@
 <%--        for each: c:
     ${} dùng cho biến gọi từ servlet sang
 --%>
-    <c:forEach items="${listsCate}" var="cate"> // lưu ý
+<%--luu y--%>
+    <c:forEach items="${listsCate}" var="cate">
     <tr>
         <td>${i.index+1}</td>
         <td>${cate.categoryCode}</td>
