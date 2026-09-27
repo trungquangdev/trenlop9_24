@@ -9,6 +9,7 @@ import com.example.trenlop9_24.repository.CategoryRepository;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
+import lombok.SneakyThrows;
 import org.apache.commons.beanutils.BeanUtils;
 
 @WebServlet(name = "CategoryServlet", value = {
@@ -107,36 +108,34 @@ public class CategoryServlet extends HttpServlet {
         System.out.println("URI la: " + uri);
 
         if (uri.contains("/category/add")) {
-            this.addCategory(request,response);
-        } else if (uri.contains("/category/update")) {
-            this.updateCategory(request,response);
+            this.addCategory(request, response);
 
-        }else {}
+        } else if (uri.contains("/category/update")) {
+            this.updateCategory(request, response);
+        }
     }
 
     private void updateCategory(HttpServletRequest request, HttpServletResponse response) {
     }
-
-    private void addCategory(HttpServletRequest request, HttpServletResponse response) throws IOException, InvocationTargetException, IllegalAccessException {
+    @SneakyThrows
+    private void addCategory(HttpServletRequest request, HttpServletResponse response) throws IOException{
         Category cate = new Category();
 
-        try {
-            BeanUtils.populate(cate, request.getParameterMap());
-            cateRepo.add(cate);
-            response.sendRedirect("/category/hien-thi");
-        } catch (IllegalAccessException | InvocationTargetException e) {
-            e.printStackTrace();
-            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-        }
+//        try {
+//            BeanUtils.populate(cate, request.getParameterMap());
+//            cateRepo.add(cate);
+//            response.sendRedirect("/category/hien-thi");
+//        } catch (IllegalAccessException | InvocationTargetException e) {
+//            e.printStackTrace();
+//            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+//        }
         //b1: lay toan bo gia tri cua cac o input jsp
         // BeanUtil -> mapping toan bo gia tri input - tu dong mapping
         // mapping name input trung` name entity
         BeanUtils.populate(cate,request.getParameterMap());
-        //b2:
-        // Lưu Category xuống database
+        // B2: Goi add trong cate
         cateRepo.add(cate);
-
-        // Sau khi thêm xong, quay về trang hiển thị
+        // B3: Quay ve trang hien thi
         response.sendRedirect("/category/hien-thi");
     }
 }
