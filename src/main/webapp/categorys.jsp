@@ -12,7 +12,7 @@
 <br/>
 <button><a href="">Add Cate</a></button>
 <%--   hiện thị dữ liệu jsp: table/ì..else/switch...case -> jstl <c:ten ham>--%>
-<table>
+<table border="1" cellspacing="1" cellpadding="10">
     <thead>
     <tr>
         <th>STT</th>
@@ -27,10 +27,18 @@
 --%>
     <c:forEach items="${listsCate}" var="cate"> // lưu ý
     <tr>
-        <td></td>
+        <td>${i.index+1}</td>
         <td>${cate.categoryCode}</td>
         <td>${cate.categoryName}</td>
-        <td></td>
+        <td>
+            <%-- cach truyen gia tri tren duowng dan
+            1. neu chi truyen 1 gia tri thi dung dau "?"
+            2.neu truyen nhieu hown 1 duowng dan: gia tri thu 2 tro di se la dau "&"
+            --%>
+            <a href="/category/delete?a=${cate.id}"> Delete</a>
+            <a href="/category/detail?a=${cate.id}">Detail</a>
+            <a href="/category/view-update?a=${cate.id}">Update</a>
+        </td>
     </tr>
     </c:forEach>
     </tbody>

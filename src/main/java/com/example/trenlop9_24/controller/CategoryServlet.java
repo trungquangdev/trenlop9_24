@@ -8,6 +8,7 @@ import com.example.trenlop9_24.repository.CategoryRepository;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
+import org.apache.commons.beanutils.BeanUtils;
 
 @WebServlet(name = "CategoryServlet", value = {
         "/category/hien-thi",
@@ -51,19 +52,43 @@ public class CategoryServlet extends HttpServlet {
         }
     }
 
-    private void viewAddCategory(HttpServletRequest request, HttpServletResponse response) {
+    private void viewAddCategory(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.getRequestDispatcher("/add-category.jsp").forward(request,response);
     }
 
     private void searchCategory(HttpServletRequest request, HttpServletResponse response) {
     }
 
-    private void viewUpdateCategory(HttpServletRequest request, HttpServletResponse response) {
+    private void viewUpdateCategory(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        //b1: lay gia tri duocw truyen tren duong dan
+        String id = request.getParameter("a");
+        //b2 lay ra doi tuong detail
+        Category cate = cateRepo.getOne(Long.valueOf(id));
+        //b3: truyen gia tri cate ->jsp
+        request.setAttribute("cate",cate);
+        //b4 chuyen trang
+        request.getRequestDispatcher("/update-cate.jsp").forward(request,response);
     }
 
-    private void deleteCategory(HttpServletRequest request, HttpServletResponse response) {
+    private void deleteCategory(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        //b1: lay gia tri duocw truyen tren duong dan
+        String id = request.getParameter("a");
+        Category cate = cateRepo.getOne(Long.valueOf(id));
+        //b2: goi ham xoa trong repo
+        cateRepo.delete(cate);
+        //b3: chuyen trang - c2=> category/hien-thi
+        response.sendRedirect("/category/hien-thi");
     }
 
-    private void detailCategory(HttpServletRequest request, HttpServletResponse response) {
+    private void detailCategory(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        //b1: lay gia tri duocw truyen tren duong dan
+        String id = request.getParameter("a");
+        //b2 lay ra doi tuong detail
+        Category cate = cateRepo.getOne(Long.valueOf(id));
+        //b3: truyen gia tri cate ->jsp
+        request.setAttribute("cate",cate);
+        //b4 chuyen trang
+        request.getRequestDispatcher("/detail-cate.jsp").forward(request,response);
     }
 
     private void hienThiCategory(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -92,5 +117,12 @@ public class CategoryServlet extends HttpServlet {
     }
 
     private void addCategory(HttpServletRequest request, HttpServletResponse response) {
+        Category cate = new Category();
+        //b1: lay toan bo gia tri cua cac o input jsp
+        // BeanUtil -> mapping toan bo gia tri input - tu dong mapping
+        // mapping name input trung` name entity
+        BeanUtils.populate(cate,request.getParameterMap());
+        //b2:
+        cateRepo.
     }
 }
