@@ -3,25 +3,33 @@ package com.example.trenlop9_24.repository;
 import com.example.trenlop9_24.entity.Category;
 import com.example.trenlop9_24.util.HibernateUtil;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 
+import java.nio.channels.SeekableByteChannel;
 import java.util.List;
 
 public class CategoryRepository {
     // phiên làm việc -> 1 phiên làm việc -> 1 session
-    private Session s;
+//    private Session s;
+//    public CategoryRepository() {
+//        // mở phiên trong contructor
+//        s= HibernateUtil.getFACTORY().openSession();
+//    }
 
-    public CategoryRepository() {
-        // mở phiên trong contructor
-        s= HibernateUtil.getFACTORY().openSession();
-    }
+//    Nguyên tắc: mỗi request/mỗi thao tác nên mở session riêng, dùng xong đóng ngay (mô hình "session-per-operation" hoặc "session-per-request").
 
     public List<Category>getAll(){
-        //truy van tren entity _ select entity
-        return s.createQuery("from Category ").list();
+        try(Session s = HibernateUtil.getFACTORY().openSession()){
+            //truy van tren entity _ select entity
+            return s.createQuery("from Category", Category.class).list();
+        }
+
     }
 
     public Category getOne(Long id){
-        return s.find(Category.class, id); //chi ap dung voi fnc find theo id tra id tra ve 1ds
+        try(Session s = HibernateUtil.getFACTORY().openSession()){
+            return s.find(Category.class, id); //chi ap dung voi fnc find theo id tra id tra ve 1ds
+        }
     }
     //dam bao phai ra du lieu ham getAll
     // error  Category is not mapped [from Category ]
@@ -29,17 +37,20 @@ public class CategoryRepository {
     // 2 do chua register trong HibernateUtil
 
     public void add(Category cate){
-        // transation -> tinh toan ven
-        try{
-            //b1: bat dau 1 transiton
-            s.getTransaction().begin();
-            // b2: thuc hien chuc nang add -> persit
-            s.persist(cate);
-            //b3: commit
-            s.getTransaction().commit();
-        }catch (Exception e){
-            s.getTransaction().rollback(); // error se quay ve trang thai ban dau
-            e.printStackTrace();
+        try(Session s = HibernateUtil.getFACTORY().openSession()){
+            Transaction tx = s.getTransaction();
+            // transation -> tinh toan ven
+            try{
+                //b1: bat dau 1 transiton
+                s.getTransaction().begin();
+                // b2: thuc hien chuc nang add -> persit
+                s.persist(cate);
+                //b3: commit
+                s.getTransaction().commit();
+            }catch (Exception e){
+                s.getTransaction().rollback(); // error se quay ve trang thai ban dau
+                e.printStackTrace();
+            }
         }
     }
 
